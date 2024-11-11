@@ -34,10 +34,6 @@ out/
 /.nb-gradle/
 
 ## Secret property
-src/main/resources/application.properties
-
-
-
 
 
 

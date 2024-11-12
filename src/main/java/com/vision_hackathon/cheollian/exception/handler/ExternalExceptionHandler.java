@@ -1,20 +1,21 @@
-package com.vision_hackathon.cheollian.util.exception.handler;
+package com.vision_hackathon.cheollian.exception.handler;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.vision_hackathon.cheollian.exception.ExceptionHandlerOrder;
 import com.vision_hackathon.cheollian.util.api.ApiErrorResult;
-import com.vision_hackathon.cheollian.util.exception.BaseExceptionHandler;
-import com.vision_hackathon.cheollian.util.exception.ExceptionHandlerOrder;
+import com.vision_hackathon.cheollian.exception.BaseExceptionHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
-@Order(ExceptionHandlerOrder.GLOBAL_EXCEPTION_HANDLER)
+@Order(ExceptionHandlerOrder.EXTERNAL_EXCEPTION_HANDLER)
 public class ExternalExceptionHandler extends BaseExceptionHandler<Exception> {
 
 	@ExceptionHandler(Exception.class)

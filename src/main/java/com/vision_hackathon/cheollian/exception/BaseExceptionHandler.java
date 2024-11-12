@@ -1,4 +1,4 @@
-package com.vision_hackathon.cheollian.util.exception;
+package com.vision_hackathon.cheollian.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.vision_hackathon.cheollian.util.exception.support.global;
+package com.vision_hackathon.cheollian.exception.support.global;
 
 import org.springframework.http.HttpStatus;
 

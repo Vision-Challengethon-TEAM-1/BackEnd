@@ -1,0 +1,53 @@
+package com.vision_hackathon.cheollian.member.entity;
+
+import java.util.UUID;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "member")
+public class Member {
+	@Id
+	@Column(name = "member_id")
+	private UUID memberId;
+
+	@Email
+	@NotBlank(message = "Email cannot be blank")
+	@Size(max = 50, message = "Email must not exceed 100 characters")
+	@Column(name = "email", unique = true)
+	private String email;
+
+	@NotNull(message = "Role cannot be null")
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role")
+	private Role role;
+
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private MemberDetail memberDetail;
+
+	@Builder
+	public Member(UUID memberId, String email, Role role, MemberDetail memberDetail) {
+		this.memberId = memberId;
+		this.email = email;
+		this.role = role;
+		this.memberDetail = memberDetail;
+	}
+}

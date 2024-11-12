@@ -22,8 +22,9 @@ extra["springAiVersion"] = "1.0.0-M3"
 
 dependencies {
 	// Spring Boot Starters
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
 	// Spring AI

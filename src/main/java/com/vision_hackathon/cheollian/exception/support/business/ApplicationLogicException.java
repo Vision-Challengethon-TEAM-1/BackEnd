@@ -1,8 +1,8 @@
-package com.vision_hackathon.cheollian.util.exception.support.business;
+package com.vision_hackathon.cheollian.exception.support.business;
 
 import org.springframework.http.HttpStatus;
 
-import com.vision_hackathon.cheollian.util.exception.support.global.GlobalException;
+import com.vision_hackathon.cheollian.exception.support.global.GlobalException;
 
 import lombok.Getter;
 

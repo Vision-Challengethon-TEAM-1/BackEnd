@@ -1,18 +1,17 @@
 version: '3.9'
 
 services:
-  cheollian-server:
-    image: adorableco/cheollian:latest
-    restart: unless-stopped
-    container_name: cheollian-server
-    env_file:
-      - ./.env
-    environment:
-      - TZ=Asia/Seoul
-    ports:
-      - ${SPRING_PORT}:${SPRING_PORT}
-    depends_on:
-      - cheollian-database
+#  cheollian-server:
+#    image: sangming/cheollian:latest
+#    restart: unless-stopped
+#    container_name: cheollian-server
+#    env_file: .env
+#    environment:
+#      - TZ=Asia/Seoul
+#    ports:
+#      - ${SPRING_PORT}:${SPRING_PORT}
+#    depends_on:
+#      - cheollian-database
 
   cheollian-database:
     image: mysql:8.0

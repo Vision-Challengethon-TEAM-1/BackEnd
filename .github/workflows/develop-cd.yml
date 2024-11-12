@@ -1,0 +1,59 @@
+name: develop-cd
+
+on:
+  push:
+    branches: [ 'main' ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+        shell: bash
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        env:
+          SPRING_PORT: ${{secrets.SPRING_PORT}}
+          DB_USERNAME: ${{secrets.DB_USERNAME}}
+          DB_DATABASE: ${{secrets.DB_DATABASE}}
+          DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+          DB_ROOT_PASSWORD: ${{secrets.DB_ROOT_PASSWORD}}
+          DB_HOST: ${{secrets.DB_HOST}}
+          DB_PORT: ${{secrets.DB_PORT}}
+          OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}
+        run: ./gradlew build -x test
+
+      - name: Docker build
+        run: |
+          ./deploy.sh
+
+      - name: Google auth
+        id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          project_id: '${{ secrets.PROJECT_ID }}'
+
+      - name: 'Pull images and run docker-compose'
+        run: |-
+          docker compose -f docker-compose.yml down --rmi all
+          docker pull ${{ secrets.DOCKER_USERNAME }}/phote:latest
+          docker compose -f docker-compose.yml up -d

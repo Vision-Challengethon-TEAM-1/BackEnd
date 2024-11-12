@@ -2,7 +2,7 @@
 
 set -e
 
-IMAGE_NAME="sangming/cheollian"
+IMAGE_NAME="adorableco/cheollian"
 TAG="latest"
 
 echo "🛠️  Gradle 프로젝트 빌드 중..."

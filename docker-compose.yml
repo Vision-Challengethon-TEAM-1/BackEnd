@@ -1,7 +1,41 @@
+version: '3.9'
+
 services:
   cheollian-server:
+    image: adorableco/cheollian:latest
     restart: unless-stopped
     container_name: cheollian-server
+    env_file:
+      - ./.env
     environment:
       - TZ=Asia/Seoul
     ports:
+      - ${SPRING_PORT}:${SPRING_PORT}
+    depends_on:
+      - cheollian-database
+
+  cheollian-database:
+    image: mysql:8.0
+    restart: always
+    container_name: cheollian-database
+    environment:
+      TZ: Asia/Seoul
+      LANG: C.UTF-8
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    command:
+      - --port=${DB_PORT}
+    volumes:
+      - cheollian-database:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  cheollian-database:

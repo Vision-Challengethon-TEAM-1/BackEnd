@@ -28,7 +28,7 @@ public class JwtCookieGenerator {
 			expiration,
 			path,
 			httpOnly,
-			true
+			false // 수정 필요
 		);
 	}
 
@@ -41,7 +41,7 @@ public class JwtCookieGenerator {
 			cookieName,
 			path,
 			httpOnly,
-			true
+			false // 수정 필요
 		);
 	}
 }

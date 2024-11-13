@@ -2,8 +2,6 @@ package com.vision_hackathon.cheollian.member.entity;
 
 import java.util.UUID;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

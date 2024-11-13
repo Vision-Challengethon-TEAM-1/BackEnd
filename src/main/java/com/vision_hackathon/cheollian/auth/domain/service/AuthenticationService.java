@@ -2,6 +2,8 @@ package com.vision_hackathon.cheollian.auth.domain.service;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,14 +19,17 @@ import com.vision_hackathon.cheollian.auth.security.dto.Oauth2ResponseDto;
 import com.vision_hackathon.cheollian.member.entity.Member;
 import com.vision_hackathon.cheollian.member.persistence.MemberRepository;
 
+import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AuthenticationService {
+	private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
 	private final MemberRepository memberRepository;
 	private final JwtProperties jwtProperties;
 	private final RefreshTokenRepository refreshTokenRepository;

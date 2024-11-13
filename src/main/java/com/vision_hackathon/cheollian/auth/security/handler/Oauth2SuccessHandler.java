@@ -30,6 +30,7 @@ public class Oauth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         boolean hasMemberDetails = authenticationService.hasMemberDetails(authentication.getName());
         String redirectUrl = oauth2Properties.getRedirectUri() + "?hasMemberDetails=" + hasMemberDetails;
 
+
         response.sendRedirect(redirectUrl);
 
         log.info("OAuth2 login successful. Email: {}", authentication.getName());

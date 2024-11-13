@@ -57,7 +57,7 @@ public class JwtTokenService {
 			.signWith(signKey)
 			.compact();
 
-		return new Token(jwtProperties.getBearerType(), TokenType.ACCESS_TOKEN, token);
+		return new Token(jwtProperties.getBearerType(), type, token);
 	}
 
 	private Map<String, Object> buildHeader(TokenType type) {

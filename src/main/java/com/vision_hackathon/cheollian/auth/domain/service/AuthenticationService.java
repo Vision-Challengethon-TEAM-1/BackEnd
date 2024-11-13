@@ -30,7 +30,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AuthenticationService {
-	private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
 	private final MemberRepository memberRepository;
 	private final MemberDetailRepository memberDetailRepository;
 	private final JwtProperties jwtProperties;

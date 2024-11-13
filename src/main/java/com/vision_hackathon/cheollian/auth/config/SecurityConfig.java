@@ -73,7 +73,8 @@ public class SecurityConfig {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList(
 			"http://localhost:8080",
-			"http://localhost:3000"
+			"https://foodeat.o-r.kr",
+			"https://diet-analysis.vercel.app"
 		));
 		configuration.setAllowedMethods(Arrays.asList(
 			HttpMethod.GET.name(),

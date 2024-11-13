@@ -11,14 +11,22 @@ jobs:
   setting:
     runs-on: ubuntu-latest
     env:
-      SPRING_PORT: ${{secrets.SPRING_PORT}}
-      DB_USERNAME: ${{secrets.DB_USERNAME}}
-      DB_DATABASE: ${{secrets.DB_DATABASE}}
-      DB_PASSWORD: ${{secrets.DB_PASSWORD}}
-      DB_ROOT_PASSWORD: ${{secrets.DB_ROOT_PASSWORD}}
-      DB_HOST: ${{secrets.DB_HOST}}
-      DB_PORT: ${{secrets.DB_PORT}}
-      OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}
+      SPRING_PORT: ${{ secrets.SPRING_PORT }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_DATABASE: ${{ secrets.DB_DATABASE }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      REDIS_HOST: ${{ secrets.REDIS_HOST }}
+      REDIS_PORT: ${{ secrets.REDIS_PORT }}
+      REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+      OAUTH2_REDIRECT_URI: ${{ secrets.OAUTH2_REDIRECT_URI }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     steps:
       - uses: actions/checkout@v3

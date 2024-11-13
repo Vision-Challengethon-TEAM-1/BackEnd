@@ -22,7 +22,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build with Gradle
+      - name: Build with Gradle and Process Docker
         env:
           SPRING_PORT: ${{secrets.SPRING_PORT}}
           DB_USERNAME: ${{secrets.DB_USERNAME}}
@@ -32,10 +32,9 @@ jobs:
           DB_HOST: ${{secrets.DB_HOST}}
           DB_PORT: ${{secrets.DB_PORT}}
           OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}
-        run: ./gradlew build -x test
 
-      - name: Docker build
         run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           ./deploy.sh
 
       - name: Google auth

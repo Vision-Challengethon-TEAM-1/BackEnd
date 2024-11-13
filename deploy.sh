@@ -11,8 +11,6 @@ echo "🛠️  Gradle 프로젝트 빌드 중..."
 echo "🐳️  Docker 이미지 빌드 중..."
 docker build -t $IMAGE_NAME:$TAG .
 
-echo "🔑️  Docker Hub 로그인 중..."
-docker login
 
 echo "📤️  Docker Hub에 이미지 푸시 중..."
 docker push $IMAGE_NAME:$TAG

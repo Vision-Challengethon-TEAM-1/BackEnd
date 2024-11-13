@@ -29,7 +29,6 @@ dependencies {
 
 	// Spring AI
 	implementation("org.springframework.ai:spring-ai-openai-spring-boot-starter")
-	developmentOnly("org.springframework.ai:spring-ai-spring-boot-docker-compose")
 
 	// Security
 	implementation("org.springframework.security:spring-security-oauth2-client")
@@ -44,7 +43,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
 	// Docker Compose
-	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+	//	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+	//	developmentOnly("org.springframework.ai:spring-ai-spring-boot-docker-compose")
 
 	// Lombok
 	compileOnly("org.projectlombok:lombok")

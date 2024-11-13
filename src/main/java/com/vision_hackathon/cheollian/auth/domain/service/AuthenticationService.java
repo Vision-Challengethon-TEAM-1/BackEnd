@@ -17,6 +17,7 @@ import com.vision_hackathon.cheollian.auth.jwt.provider.JwtCookieGenerator;
 import com.vision_hackathon.cheollian.auth.jwt.provider.JwtTokenService;
 import com.vision_hackathon.cheollian.auth.security.dto.Oauth2ResponseDto;
 import com.vision_hackathon.cheollian.member.entity.Member;
+import com.vision_hackathon.cheollian.member.persistence.MemberDetailRepository;
 import com.vision_hackathon.cheollian.member.persistence.MemberRepository;
 
 import groovy.util.logging.Slf4j;
@@ -31,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthenticationService {
 	private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
 	private final MemberRepository memberRepository;
+	private final MemberDetailRepository memberDetailRepository;
 	private final JwtProperties jwtProperties;
 	private final RefreshTokenRepository refreshTokenRepository;
 	private final JwtTokenService jwtTokenService;
@@ -93,6 +95,6 @@ public class AuthenticationService {
 	}
 
 	public boolean hasMemberDetails(String email) {
-		return memberRepository.existsMemberDetailByEmail(email);
+		return memberDetailRepository.existsByMemberEmail(email);
 	}
 }

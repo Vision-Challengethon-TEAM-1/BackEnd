@@ -2,12 +2,16 @@ package com.vision_hackathon.cheollian.member.entity;
 
 import java.util.UUID;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -26,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "member")
 public class Member {
 	@Id
-	@Column(name = "member_id")
+	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID memberId;
 
 	@Email
@@ -34,6 +38,11 @@ public class Member {
 	@Size(max = 50, message = "Email must not exceed 100 characters")
 	@Column(name = "email", unique = true)
 	private String email;
+
+	@NotBlank(message = "Name cannot be blank")
+	@Size(max = 50, message = "Name must not exceed 50 characters")
+	@Column(name = "name")
+	private String name;
 
 	@NotNull(message = "Role cannot be null")
 	@Enumerated(EnumType.STRING)
@@ -44,9 +53,10 @@ public class Member {
 	private MemberDetail memberDetail;
 
 	@Builder
-	public Member(UUID memberId, String email, Role role, MemberDetail memberDetail) {
+	public Member(UUID memberId, String email, String name, Role role, MemberDetail memberDetail) {
 		this.memberId = memberId;
 		this.email = email;
+		this.name = name;
 		this.role = role;
 		this.memberDetail = memberDetail;
 	}

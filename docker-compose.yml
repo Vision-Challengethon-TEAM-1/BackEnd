@@ -36,5 +36,18 @@ services:
       timeout: 5s
       retries: 5
 
+  cheollian-redis:
+    image: redis:5.0
+    container_name: cheollian-redis
+    command: --port ${REDIS_PORT} --requirepass ${REDIS_PASSWORD}
+    expose:
+      - ${REDIS_PORT}
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    volumes:
+      - cheollian-redis:/data
+    restart: always
+
 volumes:
   cheollian-database:
+  cheollian-redis:

@@ -3,13 +3,14 @@ package com.vision_hackathon.cheollian.exception.handler;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.reactive.resource.NoResourceFoundException;
 
+import com.vision_hackathon.cheollian.exception.BaseExceptionHandler;
 import com.vision_hackathon.cheollian.exception.ExceptionHandlerOrder;
 import com.vision_hackathon.cheollian.util.api.ApiErrorResult;
-import com.vision_hackathon.cheollian.exception.BaseExceptionHandler;
+import com.vision_hackathon.cheollian.util.api.ApiResponse;
 
 import lombok.extern.slf4j.Slf4j;
 

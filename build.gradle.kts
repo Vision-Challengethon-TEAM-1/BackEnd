@@ -39,8 +39,9 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
 
-	// Database
-	runtimeOnly("com.mysql:mysql-connector-j")
+	// Persistence
+	implementation("com.mysql:mysql-connector-j")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
 	// Docker Compose
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")

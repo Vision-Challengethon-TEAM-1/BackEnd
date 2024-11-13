@@ -9,7 +9,6 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import com.vision_hackathon.cheollian.auth.domain.service.AuthenticationService;
 import com.vision_hackathon.cheollian.auth.jwt.provider.JwtTokenService;
-import com.vision_hackathon.cheollian.auth.security.exception.RefreshTokenInvalidException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -56,7 +55,6 @@ public class RefreshTokenFilter extends GenericFilterBean {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 } else {
                     authenticationService.logout(servletResponse, refreshTokenValue);
-                    throw new RefreshTokenInvalidException();
                 }
             }
             chain.doFilter(request, response);

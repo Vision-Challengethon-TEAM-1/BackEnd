@@ -9,7 +9,7 @@ echo "🛠️  Gradle 프로젝트 빌드 중..."
 ./gradlew clean build -x test
 
 echo "🐳️  Docker 이미지 빌드 중..."
-docker build -t $IMAGE_NAME:$TAG .
+docker build -t $IMAGE_NAME:$TAG . --platform linux/amd64
 
 
 echo "📤️  Docker Hub에 이미지 푸시 중..."

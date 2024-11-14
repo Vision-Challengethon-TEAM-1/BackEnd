@@ -52,19 +52,25 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           ./deploy.sh
 
-      - name: Google auth
-        id: 'auth'
-        uses: 'google-github-actions/auth@v2'
-        with:
-          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
-          project_id: '${{ secrets.PROJECT_ID }}'
+#      - name: Google auth
+#        id: 'auth'
+#        uses: 'google-github-actions/auth@v2'
+#        with:
+#          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+#          project_id: '${{ secrets.PROJECT_ID }}'
+#
+#      - name: 'Set up Cloud SDK'
+#        uses: 'google-github-actions/setup-gcloud@v1'
+#        with:
+#          project_id: '${{ secrets.PROJECT_ID }}'
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
+      - name: Pull images and run docker-compose
+        uses: appleboy/ssh-action@master
         with:
-          project_id: '${{ secrets.PROJECT_ID }}'
-
-      - name: 'Pull images and run docker-compose'
+          host: ${{ secrets.GCP_HOST }}
+          username: ${{ secrets.GCP_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
         run: |-
           docker compose -f docker-compose.yml down --rmi all
           docker pull ${{ secrets.DOCKER_USERNAME }}/cheollian:latest

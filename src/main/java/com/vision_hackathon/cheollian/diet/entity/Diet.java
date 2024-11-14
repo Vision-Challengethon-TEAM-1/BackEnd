@@ -28,6 +28,10 @@ public class Diet extends BaseAuditEntity {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID dietId;
 
+	private String date;
+
+	private int totalKcal;
+
 	@Column(name = "carbs")
 	private Float carbs; // 탄수화물
 
@@ -73,9 +77,10 @@ public class Diet extends BaseAuditEntity {
 	private Member member;
 
 	@Builder
-	public Diet(UUID dietId, Float carbs, Float protein, Float fat, Float natrium, Float kalium, Float cholesterol,
-		Float vitaminA, Float vitaminB, Float vitaminC, DietType type, String image, Member member) {
-		this.dietId = dietId;
+	public Diet( int totalKcal, Float carbs, Float protein, Float fat, Float natrium, Float kalium, Float cholesterol,
+		Float vitaminA, Float vitaminB, Float vitaminC, DietType type, String image, Member member, String date) {
+		this.dietId = UUID.randomUUID();
+		this.totalKcal = totalKcal;
 		this.carbs = carbs;
 		this.protein = protein;
 		this.fat = fat;
@@ -88,5 +93,6 @@ public class Diet extends BaseAuditEntity {
 		this.type = type;
 		this.image = image;
 		this.member = member;
+		this.date = date;
 	}
 }

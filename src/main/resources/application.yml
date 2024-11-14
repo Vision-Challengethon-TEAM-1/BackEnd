@@ -15,7 +15,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         show-sql: true
@@ -46,6 +46,9 @@ app:
   auth:
     redirect-uri: ${OAUTH2_REDIRECT_URI}
 
+cloud:
+  project-id: ${CLOUD_PROJECT_ID}
+  bucket: ${CLOUD_BUCKET_NAME}
 
 logging:
   level:

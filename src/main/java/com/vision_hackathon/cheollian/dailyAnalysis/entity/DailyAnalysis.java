@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,25 +25,26 @@ public class DailyAnalysis extends BaseAuditEntity {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID dailyAnalysisId;
 
-	@Column(name = "carbs", nullable = false)
+	@Column(name = "carbs")
 	private Float carbs;
 
-	@Column(name = "fat", nullable = false)
+	@Column(name = "fat")
 	private Float fat;
 
-	@Column(name = "natrium", nullable = false)
+	@Column(name = "natrium")
 	private Float natrium;
 
-	@Column(name = "kalium", nullable = false)
+	@Column(name = "kalium")
 	private Float kalium;
 
-	@Column(name = "protein", nullable = false)
+	@Column(name = "protein")
 	private Float protein;
 
-	@Column(name = "advice", nullable = false, length = 255)
+	@Lob
+	@Column(name = "advice")
 	private String advice;
 
-	@Column(name = "cholesterol", nullable = false)
+	@Column(name = "cholesterol")
 	private Float cholesterol;
 
 	@ManyToOne(fetch = FetchType.LAZY)

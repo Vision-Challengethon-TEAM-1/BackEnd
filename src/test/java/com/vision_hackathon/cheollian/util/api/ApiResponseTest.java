@@ -1,6 +1,7 @@
 package com.vision_hackathon.cheollian.util.api;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 

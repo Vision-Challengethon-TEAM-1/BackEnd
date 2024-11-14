@@ -40,11 +40,12 @@ public class AccessTokenAuthorizationFilter extends GenericFilterBean {
 
         try {
             String accessToken = jwtTokenService.resolveAccessToken(servletRequest);
+            log.info("accessToken: {}", accessToken);
             if (accessToken != null) {
                 Jws<Claims> claims = jwtTokenService.extractClaims(accessToken);
                 String email = jwtTokenService.extractEmail(claims);
-
                 Authentication authentication = jwtTokenService.getAuthentication(email);
+
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
             chain.doFilter(request, response);

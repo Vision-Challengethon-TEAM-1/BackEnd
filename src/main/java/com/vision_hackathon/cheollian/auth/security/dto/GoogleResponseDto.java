@@ -28,7 +28,7 @@ public class GoogleResponseDto implements Oauth2ResponseDto {
         return Member.builder()
             .email(getEmail())
             .name(getName())
-            .role(Role.USER)
+            .role(Role.ROLE_USER)
             .build();
     }
 }

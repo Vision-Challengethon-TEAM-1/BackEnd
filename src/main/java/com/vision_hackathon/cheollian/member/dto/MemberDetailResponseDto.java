@@ -3,9 +3,7 @@ package com.vision_hackathon.cheollian.member.dto;
 import java.util.UUID;
 
 import com.vision_hackathon.cheollian.member.entity.Gender;
-import com.vision_hackathon.cheollian.member.entity.Member;
 import com.vision_hackathon.cheollian.member.entity.MemberDetail;
-import com.vision_hackathon.cheollian.member.entity.Role;
 
 import lombok.Builder;
 
@@ -18,6 +16,10 @@ public record MemberDetailResponseDto(
 	String schoolName, Integer schoolCode
 ) {
 	public static MemberDetailResponseDto from(MemberDetail memberDetail) {
+		if (memberDetail == null) {
+			return null;
+		}
+
 		return MemberDetailResponseDto.builder()
 			.memberId(memberDetail.getMemberId())
 			.age(memberDetail.getAge())

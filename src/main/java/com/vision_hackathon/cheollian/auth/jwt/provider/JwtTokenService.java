@@ -1,5 +1,6 @@
 package com.vision_hackathon.cheollian.auth.jwt.provider;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
 
@@ -9,7 +10,6 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import com.vision_hackathon.cheollian.auth.config.JwtProperties;
 import com.vision_hackathon.cheollian.auth.jwt.dto.Token;
@@ -36,7 +36,8 @@ public class JwtTokenService {
 
 	@PostConstruct
 	public void init() {
-		this.signKey = new SecretKeySpec(jwtProperties.getSecret().getBytes(), "HmacSHA256");
+		this.signKey = new SecretKeySpec(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+
 	}
 
 	public Token generateToken(Authentication authentication, TokenType type) {
@@ -93,8 +94,8 @@ public class JwtTokenService {
 	public String resolveAccessToken(HttpServletRequest request) {
 		String bearerToken = request.getHeader(jwtProperties.getAuthHeader());
 
-		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(jwtProperties.getBearerType())) {
-			return bearerToken.substring(jwtProperties.getBearerType().length()).trim();
+		if (bearerToken != null && bearerToken.startsWith(jwtProperties.getBearerType())) {
+			return bearerToken.replace(jwtProperties.getBearerType(), "").trim();
 		}
 
 		return null;

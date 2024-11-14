@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class ApiResponse {
-    public static <T> ApiSuccessResult<T> success(HttpStatus httpStatus, String msg) {
-        return new ApiSuccessResult<>(httpStatus.value(), msg, null);
+    public static <T> ApiSuccessResult<T> success(HttpStatus httpStatus) {
+        return new ApiSuccessResult<>(httpStatus.value(), null);
     }
 
-    public static <T> ApiSuccessResult<T> success(HttpStatus httpStatus, String msg, T response) {
-        return new ApiSuccessResult<>(httpStatus.value(), msg, response);
+    public static <T> ApiSuccessResult<T> success(HttpStatus httpStatus, T response) {
+        return new ApiSuccessResult<>(httpStatus.value(), response);
     }
 
     public static ApiErrorResult error(HttpStatus status, String msg) {

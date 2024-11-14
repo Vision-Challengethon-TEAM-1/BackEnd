@@ -1,6 +1,12 @@
 package com.vision_hackathon.cheollian.member.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import com.vision_hackathon.cheollian.base.BaseAuditEntity;
+import com.vision_hackathon.cheollian.dailyAnalysis.entity.DailyAnalysis;
+import com.vision_hackathon.cheollian.diet.entity.Diet;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +17,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -26,7 +33,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member")
-public class Member {
+public class Member extends BaseAuditEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID memberId;
@@ -47,8 +54,24 @@ public class Member {
 	@Column(name = "role")
 	private Role role;
 
-	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private MemberDetail memberDetail;
+
+	@OneToMany(
+		mappedBy = "member",
+		cascade = CascadeType.ALL,
+		orphanRemoval = true,
+		fetch = FetchType.LAZY
+	)
+	private List<Diet> diets = new ArrayList<>();
+
+	@OneToMany(
+		mappedBy = "member",
+		cascade = CascadeType.ALL,
+		orphanRemoval = true,
+		fetch = FetchType.LAZY
+	)
+	private List<DailyAnalysis> dailyAnalyses = new ArrayList<>();
 
 	@Builder
 	public Member(UUID memberId, String email, String name, Role role, MemberDetail memberDetail) {

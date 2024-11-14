@@ -1,0 +1,33 @@
+package com.vision_hackathon.cheollian.member.dto;
+
+import java.util.UUID;
+
+import com.vision_hackathon.cheollian.member.entity.Gender;
+import com.vision_hackathon.cheollian.member.entity.Member;
+import com.vision_hackathon.cheollian.member.entity.MemberDetail;
+import com.vision_hackathon.cheollian.member.entity.Role;
+
+import lombok.Builder;
+
+@Builder
+public record MemberDetailResponseDto(
+	UUID memberId,
+	int age, Gender gender,
+	float height, float weight,
+	String nickname, String profileImage,
+	String schoolName, Integer schoolCode
+) {
+	public static MemberDetailResponseDto from(MemberDetail memberDetail) {
+		return MemberDetailResponseDto.builder()
+			.memberId(memberDetail.getMemberId())
+			.age(memberDetail.getAge())
+			.gender(memberDetail.getGender())
+			.height(memberDetail.getHeight())
+			.weight(memberDetail.getWeight())
+			.nickname(memberDetail.getNickname())
+			.profileImage(memberDetail.getProfileImage())
+			.schoolName(memberDetail.getSchoolName())
+			.schoolCode(memberDetail.getSchoolCode())
+			.build();
+	}
+}

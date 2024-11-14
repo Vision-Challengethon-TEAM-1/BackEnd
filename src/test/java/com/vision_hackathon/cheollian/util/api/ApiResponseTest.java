@@ -1,6 +1,7 @@
 package com.vision_hackathon.cheollian.util.api;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
@@ -8,18 +9,16 @@ class ApiResponseTest {
 
 	@Test
 	void testSuccessWithoutData() {
-		ApiSuccessResult<Void> result = ApiResponse.success(HttpStatus.OK, "Success");
+		ApiSuccessResult<Void> result = ApiResponse.success(HttpStatus.OK);
 		assertEquals(HttpStatus.OK.value(), result.status());
-		assertEquals("Success", result.msg());
 		assertNull(result.data());
 	}
 
 	@Test
 	void testSuccessWithData() {
 		String data = "Test Data";
-		ApiSuccessResult<String> result = ApiResponse.success(HttpStatus.OK, "Success", data);
+		ApiSuccessResult<String> result = ApiResponse.success(HttpStatus.OK, data);
 		assertEquals(HttpStatus.OK.value(), result.status());
-		assertEquals("Success", result.msg());
 		assertEquals(data, result.data());
 	}
 

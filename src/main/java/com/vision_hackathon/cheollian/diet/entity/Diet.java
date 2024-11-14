@@ -2,16 +2,22 @@ package com.vision_hackathon.cheollian.diet.entity;
 
 import java.util.UUID;
 
+import com.vision_hackathon.cheollian.member.entity.Member;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -61,4 +67,25 @@ public class Diet {
 	@Column(name = "image", nullable = false, length = 256)
 	private String image;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	private Member member;
+
+	@Builder
+	public Diet(UUID dietId, Float carbs, Float protein, Float fat, Float natrium, Float kalium, Float cholesterol,
+		Float vitaminA, Float vitaminB, Float vitaminC, DietType type, String image, Member member) {
+		this.dietId = dietId;
+		this.carbs = carbs;
+		this.protein = protein;
+		this.fat = fat;
+		this.natrium = natrium;
+		this.kalium = kalium;
+		this.cholesterol = cholesterol;
+		this.vitaminA = vitaminA;
+		this.vitaminB = vitaminB;
+		this.vitaminC = vitaminC;
+		this.type = type;
+		this.image = image;
+		this.member = member;
+	}
 }

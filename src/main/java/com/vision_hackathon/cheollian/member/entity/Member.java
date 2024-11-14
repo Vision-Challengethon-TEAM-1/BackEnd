@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.vision_hackathon.cheollian.dailyAnalysis.entity.DailyAnalysis;
 import com.vision_hackathon.cheollian.diet.entity.Diet;
 
 import jakarta.persistence.CascadeType;
@@ -63,13 +64,20 @@ public class Member {
 	)
 	private List<Diet> diets = new ArrayList<>();
 
+	@OneToMany(
+		mappedBy = "member",
+		cascade = CascadeType.ALL,
+		orphanRemoval = true,
+		fetch = FetchType.LAZY
+	)
+	private List<DailyAnalysis> dailyAnalyses = new ArrayList<>();
+
 	@Builder
-	public Member(UUID memberId, String email, String name, Role role, MemberDetail memberDetail, List<Diet> diets) {
+	public Member(UUID memberId, String email, String name, Role role, MemberDetail memberDetail) {
 		this.memberId = memberId;
 		this.email = email;
 		this.name = name;
 		this.role = role;
 		this.memberDetail = memberDetail;
-		this.diets = diets;
 	}
 }

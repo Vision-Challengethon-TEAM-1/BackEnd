@@ -74,7 +74,7 @@ public class SecurityConfig {
 		configuration.setAllowedOrigins(Arrays.asList(
 			"http://localhost:8080",
 			"https://foodeat.o-r.kr",
-			"https://diet-analysis.vercel.app"
+			"https://foods-eat.vercel.app/"
 		));
 		configuration.setAllowedMethods(Arrays.asList(
 			HttpMethod.GET.name(),

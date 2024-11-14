@@ -2,6 +2,7 @@ package com.vision_hackathon.cheollian.dailyAnalysis.entity;
 
 import java.util.UUID;
 
+import com.vision_hackathon.cheollian.base.BaseAuditEntity;
 import com.vision_hackathon.cheollian.member.entity.Member;
 
 import jakarta.persistence.Column;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DailyAnalysis {
+public class DailyAnalysis extends BaseAuditEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID dailyAnalysisId;

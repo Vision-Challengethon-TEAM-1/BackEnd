@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.vision_hackathon.cheollian.base.BaseAuditEntity;
 import com.vision_hackathon.cheollian.dailyAnalysis.entity.DailyAnalysis;
 import com.vision_hackathon.cheollian.diet.entity.Diet;
 
@@ -32,7 +33,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member")
-public class Member {
+public class Member extends BaseAuditEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID memberId;

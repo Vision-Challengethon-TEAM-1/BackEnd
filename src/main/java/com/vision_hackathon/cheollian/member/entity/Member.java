@@ -54,7 +54,7 @@ public class Member extends BaseAuditEntity {
 	@Column(name = "role")
 	private Role role;
 
-	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private MemberDetail memberDetail;
 
 	@OneToMany(

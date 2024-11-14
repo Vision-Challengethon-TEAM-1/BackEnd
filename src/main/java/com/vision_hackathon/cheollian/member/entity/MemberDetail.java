@@ -35,7 +35,7 @@ public class MemberDetail {
 	private UUID memberId;
 
 	@MapsId
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@OneToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "member_id")
 	@NotNull(message = "Member association cannot be null")
 	private Member member;

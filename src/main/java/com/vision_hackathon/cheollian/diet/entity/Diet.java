@@ -19,9 +19,11 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Diet extends BaseAuditEntity {
 	@Id
@@ -61,7 +63,7 @@ public class Diet extends BaseAuditEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "type", nullable = false)
-	private DietType type; // 식사 종류 (아침, 점심, 저녁) 
+	private DietType type; // 식사 종류 (아침, 점심, 저녁)
 
 
 	@Size(max = 256, message = "Diet image URL must not exceed 256 characters")

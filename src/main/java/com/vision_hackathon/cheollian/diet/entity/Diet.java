@@ -65,12 +65,7 @@ public class Diet extends BaseAuditEntity {
 	@Column(name = "type", nullable = false)
 	private DietType type; // 식사 종류 (아침, 점심, 저녁)
 
-
-	@Size(max = 256, message = "Diet image URL must not exceed 256 characters")
-	@Pattern(
-		regexp = "^(https?://).+",
-		message = "Diet image must be a valid URL starting with http:// or https://"
-	)
+	@Size(max = 256)
 	@Column(name = "image", nullable = false, length = 256)
 	private String image;
 

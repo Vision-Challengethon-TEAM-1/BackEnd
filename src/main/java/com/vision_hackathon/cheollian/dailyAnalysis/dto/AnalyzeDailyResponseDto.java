@@ -28,4 +28,6 @@ public class AnalyzeDailyResponseDto {
 
     private String date;
 
+    private String advice;
+
 }

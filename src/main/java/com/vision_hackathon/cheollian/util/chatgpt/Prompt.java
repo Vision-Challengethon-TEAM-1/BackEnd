@@ -40,4 +40,9 @@ public class Prompt {
                                     
                     Food Info : 
                     """;
+
+    public static final String DAILY_ANALYSIS =
+            """
+                    In the following text, please look at the calorie intake for breakfast, lunch, and dinner for a day that I provide and give advice in Korean.
+                   """;
 }

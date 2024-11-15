@@ -31,6 +31,18 @@ public class ChatgptRequestDto implements Serializable {
 
     }
 
+    public ChatgptRequestDto(Integer breakfastKcal, Integer lunchKcal, Integer dinnerKcal){
+        this.messages.add(
+                new ImageMessage("user",
+                        List.of(
+                                new TextContent("text", Prompt.DAILY_ANALYSIS),
+                                new TextContent("text",
+                                        "breakfast Kcal = " + breakfastKcal
+                                + " lunch Kcal = " + lunchKcal + " dinner Kcal = " + dinnerKcal)
+                        ))
+        );
+    }
+
 
 
 }

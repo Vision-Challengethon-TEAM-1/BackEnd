@@ -5,13 +5,7 @@ import java.util.UUID;
 import com.vision_hackathon.cheollian.base.BaseAuditEntity;
 import com.vision_hackathon.cheollian.member.entity.Member;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,8 +38,11 @@ public class DailyAnalysis extends BaseAuditEntity {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
+	@Lob
+	private String advice;
+
 	@Builder
-	public DailyAnalysis(Integer breakfastKcal, Integer lunchKcal, Integer dinnerKcal, Member member, String date) {
+	public DailyAnalysis(Integer breakfastKcal, Integer lunchKcal, Integer dinnerKcal, Member member, String date, String advice) {
 		this.dailyAnalysisId = UUID.randomUUID();
 		this.breakfastKcal = breakfastKcal;
 		this.lunchKcal = lunchKcal;
@@ -53,6 +50,7 @@ public class DailyAnalysis extends BaseAuditEntity {
 		this.praise = generatePraise(breakfastKcal, lunchKcal, dinnerKcal);
 		this.member = member;
 		this.date = date;
+		this.advice = advice;
 	}
 
 	private Praise generatePraise(Integer breakfastKcal, Integer lunchKcal, Integer dinnerKcal) {

@@ -47,11 +47,10 @@ public class GroupController {
 	}
 
 
-	@GetMapping("/{groupId}/{date}")
+	@GetMapping("/{groupId}")
 	@PreAuthorize("hasRole('USER') and isAuthenticated()")
 	public ResponseEntity<ApiSuccessResult<List<GroupMemberCalReadDto>>> getMembersOfGroup(
-		@PathVariable("groupId") UUID groupId,
-		@PathVariable("date") String date
+		@PathVariable("groupId") UUID groupId
 	) {
 		LocalDate currentDate = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -65,7 +64,7 @@ public class GroupController {
 	}
 
 
-	@GetMapping("/")
+	@GetMapping("/public")
 	@PreAuthorize("hasRole('USER') and isAuthenticated()")
 	public ResponseEntity<ApiSuccessResult<List<GroupReadDto>>> getPublicGroups(
 		@LoggedInUser PrincipalDetails principalDetails
@@ -107,6 +106,5 @@ public class GroupController {
 			.status(HttpStatus.CREATED)
 			.body(ApiResponse.success(HttpStatus.OK));
 	}
-
 
 }

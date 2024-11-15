@@ -97,9 +97,10 @@ public class Member extends BaseAuditEntity {
 		this.memberDetail = memberDetail;
 	}
 
-	public void connectSchool(String schoolName, int schoolCode) {
+	public void connectSchool(String schoolName, int schoolCode, String regionCode) {
 		this.memberDetail.setSchoolName(schoolName);
 		this.memberDetail.setSchoolCode(schoolCode);
+		this.memberDetail.setRegionCode(regionCode);
 	}
 
 	public void checkSchoolInfo(){

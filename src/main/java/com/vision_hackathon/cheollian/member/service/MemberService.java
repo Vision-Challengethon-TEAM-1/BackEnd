@@ -45,7 +45,7 @@ public class MemberService {
     @Transactional
     public ConnectSchoolResponseDto connectSchool(ConnectSchoolRequestDto request, Member member) {
         checkMemberJoined(member);
-        member.connectSchool(request.getSchoolName(), request.getSchoolCode());
+        member.connectSchool(request.getSchoolName(), request.getSchoolCode(), request.getRegionCode());
         memberRepository.save(member);
 
         return new ConnectSchoolResponseDto(member.getMemberId());

@@ -4,10 +4,9 @@ import com.vision_hackathon.cheollian.diet.entity.DietType;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
-public class GetNutritionFromImageResponse {
+public class GetNutritionFromSchoolResponseDto {
     private int totalKcal;
 
     private float carbs;

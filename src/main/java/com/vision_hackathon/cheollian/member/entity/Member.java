@@ -8,6 +8,7 @@ import com.vision_hackathon.cheollian.base.BaseAuditEntity;
 import com.vision_hackathon.cheollian.dailyAnalysis.entity.DailyAnalysis;
 import com.vision_hackathon.cheollian.diet.entity.Diet;
 
+import com.vision_hackathon.cheollian.diet.exception.SchoolNotFoundException;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -89,6 +90,12 @@ public class Member extends BaseAuditEntity {
 	public void connectSchool(String schoolName, int schoolCode) {
 		this.memberDetail.setSchoolName(schoolName);
 		this.memberDetail.setSchoolCode(schoolCode);
+	}
+
+	public void checkSchoolInfo(){
+		if (this.memberDetail.getSchoolName() == null){
+			throw new SchoolNotFoundException();
+		}
 	}
 
 }

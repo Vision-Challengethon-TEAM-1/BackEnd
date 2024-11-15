@@ -11,14 +11,24 @@ public class ChatgptRequestDto implements Serializable {
 
     private String model = "gpt-4o";
 
-    public ChatgptRequestDto(String imageUrl){
-        this.messages.add(
-                new ImageMessage("user",
-                        List.of(
-                                new TextContent("text", Prompt.FOOD_ANALYSIS),
-                                new ImageContent("image_url", new ImageUrl(imageUrl))
-                        ))
-        );
+    public ChatgptRequestDto(String content){
+        if (content.startsWith("http")){
+            this.messages.add(
+                    new ImageMessage("user",
+                            List.of(
+                                    new TextContent("text", Prompt.FOOD_ANALYSIS),
+                                    new ImageContent("image_url", new ImageUrl(content))
+                            ))
+            );
+        } else {
+            this.messages.add(
+                    new ImageMessage("user",
+                            List.of(
+                                    new TextContent("text", Prompt.SCHOOL_FOOD_ANALYSIS + " " +content)
+                            ))
+            );
+        }
+
     }
 
 

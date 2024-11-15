@@ -24,10 +24,16 @@ public class GoogleResponseDto implements Oauth2ResponseDto {
     }
 
     @Override
+    public String getProfileImage() {
+        return attributes.get("picture").toString();
+    }
+
+    @Override
     public Member toEntity() {
         return Member.builder()
             .email(getEmail())
             .name(getName())
+            .profileImage(getProfileImage())
             .role(Role.ROLE_USER)
             .build();
     }

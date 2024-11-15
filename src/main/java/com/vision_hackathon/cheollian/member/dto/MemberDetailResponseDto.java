@@ -12,8 +12,8 @@ public record MemberDetailResponseDto(
 	UUID memberId,
 	int age, Gender gender,
 	float height, float weight,
-	String nickname, String profileImage,
-	String schoolName, Integer schoolCode
+	String nickname, String schoolName,
+	Integer schoolCode
 ) {
 	public static MemberDetailResponseDto from(MemberDetail memberDetail) {
 		if (memberDetail == null) {
@@ -27,7 +27,6 @@ public record MemberDetailResponseDto(
 			.height(memberDetail.getHeight())
 			.weight(memberDetail.getWeight())
 			.nickname(memberDetail.getNickname())
-			.profileImage(memberDetail.getProfileImage())
 			.schoolName(memberDetail.getSchoolName())
 			.schoolCode(memberDetail.getSchoolCode())
 			.build();

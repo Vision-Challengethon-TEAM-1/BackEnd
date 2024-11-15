@@ -33,7 +33,6 @@ public class MemberService {
                 .height(request.getHeight())
                 .weight(request.getWeight())
                 .nickname(request.getNickname())
-                .profileImage(request.getProfileImage())
                 .schoolCode(request.getSchoolCode())
                 .schoolName(request.getSchoolName())
                 .build();

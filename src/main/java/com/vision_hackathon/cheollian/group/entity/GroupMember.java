@@ -13,9 +13,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GroupMember extends BaseAuditEntity {
 	@EmbeddedId
@@ -36,8 +38,10 @@ public class GroupMember extends BaseAuditEntity {
 	private GroupMemberRole role;
 
 	@Builder
-	public GroupMember(GroupMemberId id, GroupMemberRole role) {
-		this.id = id;
+	public GroupMember(Group group, Member member, GroupMemberRole role) {
+		this.group = group;
+		this.member = member;
 		this.role = role;
+		this.id = new GroupMemberId(group.getGroupId(), member.getMemberId());
 	}
 }

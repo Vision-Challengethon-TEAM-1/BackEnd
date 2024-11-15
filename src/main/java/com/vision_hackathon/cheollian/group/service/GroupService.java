@@ -43,9 +43,11 @@ public class GroupService {
 		return GroupReadDto.of(groupMemberList, groupMemberRepository);
 	}
 
-	public List<GroupReadDto> getPublicGroups() {
+	public List<GroupReadDto> getPublicGroups(Member member) {
 		List<Group> groupList = groupRepository.findAllByIsPublic(true);
+
 		return groupList.stream()
+			.filter(group -> !groupMemberRepository.existsByGroupAndMember(group, member))
 			.map(group -> GroupReadDto.of(group, groupMemberRepository))
 			.toList();
 	}

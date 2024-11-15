@@ -46,8 +46,11 @@ public class GroupController {
 
 	@GetMapping("/public")
 	@PreAuthorize("hasRole('USER') and isAuthenticated()")
-	public ResponseEntity<ApiSuccessResult<List<GroupReadDto>>> getPublicGroups() {
-		List<GroupReadDto> responseBody = groupService.getPublicGroups();
+	public ResponseEntity<ApiSuccessResult<List<GroupReadDto>>> getPublicGroups(
+		@LoggedInUser PrincipalDetails principalDetails
+	) {
+		Member member = principalDetails.member();
+		List<GroupReadDto> responseBody = groupService.getPublicGroups(member);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)

@@ -3,6 +3,11 @@ package com.vision_hackathon.cheollian.group.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.vision_hackathon.cheollian.dailyAnalysis.entity.DailyAnalysis;
+import com.vision_hackathon.cheollian.dailyAnalysis.exception.DailyAnalysisNotFoundException;
+import com.vision_hackathon.cheollian.dailyAnalysis.persistence.DailyAnalysisRepository;
+import com.vision_hackathon.cheollian.diet.persistence.DietRepository;
+import com.vision_hackathon.cheollian.group.dto.GetGroupDietResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 public class GroupService {
 	private final GroupRepository groupRepository;
 	private final GroupMemberRepository groupMemberRepository;
+	private final DietRepository dietRepository;
+	private final DailyAnalysisRepository dailyAnalysisRepository;
 
 	@Transactional
 	public GroupReadDto createGroup(Member member, GroupCreateDto createDto) {
@@ -68,4 +75,30 @@ public class GroupService {
 			.build());
 	}
 
+    public List<GetGroupDietResponseDto> getGroupDiet(UUID groupId, String date) {
+		Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
+
+		List<GroupMember> members = groupMemberRepository.findAllByGroup(group);
+
+		List<DailyAnalysis> dailyAnalyses = members.stream().map(
+				groupMember -> dailyAnalysisRepository.findByDateAndMember(date, groupMember.getMember()).orElseThrow(DailyAnalysisNotFoundException::new)
+		).toList();
+
+		List<String> foodImages = dietRepository.findDietsByDate(date)
+				.stream().map(
+						diet -> diet.getImage()
+				).toList();
+
+        return dailyAnalyses.stream().map(
+				daily -> GetGroupDietResponseDto.builder()
+						.breakfastKcal(daily.getBreakfastKcal())
+						.lunchKcal(daily.getLunchKcal())
+						.dinnerKcal(daily.getDinnerKcal())
+						.memberId(daily.getMember().getMemberId())
+						.images(foodImages)
+						.build()
+		).toList();
+
+
+	}
 }

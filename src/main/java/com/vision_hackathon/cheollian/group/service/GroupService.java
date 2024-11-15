@@ -2,11 +2,15 @@ package com.vision_hackathon.cheollian.group.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vision_hackathon.cheollian.dailyAnalysis.dto.AnalyzeDailyResponseDto;
+import com.vision_hackathon.cheollian.dailyAnalysis.service.DailyAnalysisService;
 import com.vision_hackathon.cheollian.group.dto.GroupCreateDto;
+import com.vision_hackathon.cheollian.group.dto.GroupMemberCalReadDto;
 import com.vision_hackathon.cheollian.group.dto.GroupReadDto;
 import com.vision_hackathon.cheollian.group.entity.Group;
 import com.vision_hackathon.cheollian.group.entity.GroupMember;
@@ -25,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class GroupService {
 	private final GroupRepository groupRepository;
 	private final GroupMemberRepository groupMemberRepository;
+	private final DailyAnalysisService dailyAnalysisService;
 
 	@Transactional
 	public GroupReadDto createGroup(Member member, GroupCreateDto createDto) {
@@ -51,6 +56,27 @@ public class GroupService {
 			.map(group -> GroupReadDto.of(group, groupMemberRepository))
 			.toList();
 	}
+
+	public List<GroupMemberCalReadDto> getMembersOfGroup(UUID groupId, String date) {
+		Group group = groupRepository.findById(groupId)
+			.orElseThrow(GroupNotFoundException::new);
+
+		List<GroupMember> groupMembers = groupMemberRepository.findAllByGroup(group);
+		return groupMembers.stream()
+			.map(groupMember -> {
+				AnalyzeDailyResponseDto analyzeDailyResponseDto = dailyAnalysisService.analyzeDaily(date, groupMember.getMember());
+				return GroupMemberCalReadDto.builder()
+					.nickname(groupMember.getMember().getMemberDetail().getNickname())
+					.profileImage(groupMember.getMember().getProfileImage())
+					.kcal(analyzeDailyResponseDto.getBreakfastKcal() +
+						analyzeDailyResponseDto.getLunchKcal() +
+						analyzeDailyResponseDto.getDinnerKcal())
+					.point(analyzeDailyResponseDto.getScore())
+					.build();
+			})
+			.collect(Collectors.toList());
+	}
+
 
 	@Transactional
 	public void addMemberInGroup(UUID groupId, Member member) {

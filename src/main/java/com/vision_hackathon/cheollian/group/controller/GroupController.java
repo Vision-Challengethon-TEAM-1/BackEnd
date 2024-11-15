@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vision_hackathon.cheollian.auth.security.LoggedInUser;
 import com.vision_hackathon.cheollian.auth.security.details.PrincipalDetails;
 import com.vision_hackathon.cheollian.group.dto.GroupCreateDto;
+import com.vision_hackathon.cheollian.group.dto.GroupMemberCalReadDto;
 import com.vision_hackathon.cheollian.group.dto.GroupReadDto;
 import com.vision_hackathon.cheollian.group.service.GroupService;
 import com.vision_hackathon.cheollian.member.entity.Member;
@@ -44,7 +45,21 @@ public class GroupController {
 	}
 
 
-	@GetMapping("/public")
+	@GetMapping("/{groupId}/{date}")
+	@PreAuthorize("hasRole('USER') and isAuthenticated()")
+	public ResponseEntity<ApiSuccessResult<List<GroupMemberCalReadDto>>> getMembersOfGroup(
+		@PathVariable("groupId") UUID groupId,
+		@PathVariable("date") String date
+	) {
+		List<GroupMemberCalReadDto> responseBody = groupService.getMembersOfGroup(groupId, date);
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(ApiResponse.success(HttpStatus.OK, responseBody));
+	}
+
+
+	@GetMapping("/")
 	@PreAuthorize("hasRole('USER') and isAuthenticated()")
 	public ResponseEntity<ApiSuccessResult<List<GroupReadDto>>> getPublicGroups(
 		@LoggedInUser PrincipalDetails principalDetails

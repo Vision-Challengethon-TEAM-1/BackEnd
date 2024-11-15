@@ -30,6 +30,8 @@ public class DailyAnalysis extends BaseAuditEntity {
 
 	private String date;
 
+	private int score;
+
 	@Nullable
 	private Integer breakfastKcal;
 
@@ -49,7 +51,7 @@ public class DailyAnalysis extends BaseAuditEntity {
 	private String advice;
 
 	@Builder
-	public DailyAnalysis(Integer breakfastKcal, Integer lunchKcal, Integer dinnerKcal, Member member, String date, String advice) {
+	public DailyAnalysis(Integer breakfastKcal, Integer lunchKcal, Integer dinnerKcal, Member member, String date, String advice, int score) {
 		this.dailyAnalysisId = UUID.randomUUID();
 		this.breakfastKcal = breakfastKcal;
 		this.lunchKcal = lunchKcal;
@@ -58,6 +60,7 @@ public class DailyAnalysis extends BaseAuditEntity {
 		this.member = member;
 		this.date = date;
 		this.advice = advice;
+		this.score = score;
 	}
 
 	private Praise generatePraise(Integer breakfastKcal, Integer lunchKcal, Integer dinnerKcal) {

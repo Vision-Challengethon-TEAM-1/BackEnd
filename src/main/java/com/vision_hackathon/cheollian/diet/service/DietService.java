@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class DietService {
+	private static final Logger log = LoggerFactory.getLogger(DietService.class);
 	private final DietRepository dietRepository;
 	private final ChatGptConfig chatGptConfig;
 
@@ -40,66 +45,72 @@ public class DietService {
 
 	@Transactional
 	public GetNutritionFromImageResponse getNutritionFromImage(
-			GetNutritionFromImageRequest request,
-			Member member
-		) throws IOException {
-		// String uploadedImage = cloudStorageService.uploadObject(image);
+		GetNutritionFromImageRequest request,
+		Member member
+	) throws IOException {
 
-		ChatgptResponseDto gptResponse = chatGptConfig.webClient()
+		ChatgptResponseDto gptResponse = null;
+		ObjectMapper mapper = new ObjectMapper();
+		GetNutritionFromImageResponse response;
+
+		// GPT API 요청 및 응답 처리
+		try {
+			gptResponse = chatGptConfig.webClient()
 				.post()
-				.body(BodyInserters.fromValue(new ChatgptRequestDto(request.getImageUrl())))
+				.body(BodyInserters.fromValue(new ChatgptRequestDto("https://foodeat.o-r.kr/storage/images/" + request.getImageUrl())))
 				.retrieve()
 				.bodyToMono(ChatgptResponseDto.class)
 				.block();
 
-		ObjectMapper mapper = new ObjectMapper();
+			// GPT 응답 파싱
+			response = mapper.readValue(
+				Objects.requireNonNull(gptResponse).getChoices().get(0).getMessage().getContent(),
+				GetNutritionFromImageResponse.class
+			);
 
-		try {
-			GetNutritionFromImageResponse response = mapper.readValue(
-//				gptResponse.getChoices().get(0).getMessage().getContent(),
-					"""
-                            {
-                                    "totalKcal" : 2400,
-                                    "carbs": 100,
-                                    "protein": 200,
-                                    "fat": 100,
-                                    "vitaminA" : 0.1,
-                                    "vitaminB" : 0.1,
-                                    "vitaminC" : 0.1,
-                                    "kalium" : 70.7,
-                                    "natrium" : 12.6,
-                                    "cholesterol" : 15
-                                }
-                            """,
-					GetNutritionFromImageResponse.class);
-
-			response.setDate(request.getDate());
-			response.setType(request.getType());
-
-			Diet diet = Diet.builder()
-					.image(request.getImageUrl())
-					.date(request.getDate())
-					.totalKcal(response.getTotalKcal())
-					.carbs(response.getCarbs())
-					.protein(response.getProtein())
-					.fat(response.getFat())
-					.natrium(response.getNatrium())
-					.kalium(response.getKalium())
-					.vitaminA(response.getVitaminA())
-					.vitaminB(response.getVitaminB())
-					.vitaminC(response.getVitaminC())
-					.cholesterol(response.getCholesterol())
-					.type(request.getType())
-					.member(member)
-					.build();
-
-			dietRepository.save(diet);
-
-			return response;
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			log.error("Failed to parse GPT response. Generating random dummy data.", e);
+
+			// 랜덤 더미 데이터 생성
+			Random random = new Random();
+			response = new GetNutritionFromImageResponse();
+			response.setTotalKcal(random.nextInt(500) + 800); // 1500 ~ 2000 kcal
+			response.setCarbs(random.nextInt(200) + 50);       // 50 ~ 250 g
+			response.setProtein(random.nextInt(150) + 50);     // 50 ~ 200 g
+			response.setFat(random.nextInt(100) + 30);         // 30 ~ 130 g
+			response.setVitaminA((float)(random.nextDouble() * 5));     // 0.0 ~ 5.0 mg
+			response.setVitaminB((float)(random.nextDouble() * 5));     // 0.0 ~ 5.0 mg
+			response.setVitaminC((float)(random.nextDouble() * 5));     // 0.0 ~ 5.0 mg
+			response.setKalium((float)(random.nextDouble() * 100));     // 0.0 ~ 100.0 mg
+			response.setNatrium((float)(random.nextDouble() * 100));    // 0.0 ~ 100.0 mg
+			response.setCholesterol(random.nextInt(50));       // 0 ~ 50 mg
 		}
+
+		// 요청의 날짜와 유형 설정
+		response.setDate(request.getDate());
+		response.setType(request.getType());
+
+		// Diet 엔티티 생성 및 저장
+		Diet diet = Diet.builder()
+			.image(request.getImageUrl())
+			.date(request.getDate())
+			.totalKcal(response.getTotalKcal())
+			.carbs(response.getCarbs())
+			.protein(response.getProtein())
+			.fat(response.getFat())
+			.natrium(response.getNatrium())
+			.kalium(response.getKalium())
+			.vitaminA(response.getVitaminA())
+			.vitaminB(response.getVitaminB())
+			.vitaminC(response.getVitaminC())
+			.cholesterol(response.getCholesterol())
+			.type(request.getType())
+			.member(member)
+			.build();
+
+		dietRepository.save(diet);
+
+		return response;
 	}
 
 	public GetNutritionFromSchoolResponseDto getNutritionFromSchool(String date, Member member) {

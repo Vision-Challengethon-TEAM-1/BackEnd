@@ -114,6 +114,8 @@ public class DietService {
 	}
 
 	public GetNutritionFromSchoolResponseDto getNutritionFromSchool(String date, Member member) {
+		member.checkSchoolInfo();
+
 		RestTemplate restTemplate = new RestTemplate();
 
 		MemberDetail memberDetail = member.getMemberDetail();
@@ -132,17 +134,14 @@ public class DietService {
 
 		String info = restTemplate.getForObject(uri, String.class);
 
-			// JSON 문자열을 ObjectMapper로 파싱
 			ObjectMapper objectMapper = new ObjectMapper();
 			try {
 				JsonNode rootNode = objectMapper.readTree(info);
 
-				// HashMap에 CAL_INFO 값을 넣기 위한 변수 선언
 				Map<String, String> calInfoMap = new HashMap<>();
 
 				String totalKcal = "";
 
-				// mealServiceDietInfo 배열 탐색
 				JsonNode mealServiceDietInfoNode = rootNode.path("mealServiceDietInfo");
 				for (JsonNode node : mealServiceDietInfoNode) {
 					JsonNode rowNode = node.path("row");

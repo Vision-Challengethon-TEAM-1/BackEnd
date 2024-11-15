@@ -8,4 +8,6 @@ public class ConnectSchoolRequestDto {
     private String schoolName;
 
     private int schoolCode;
+
+    private String regionCode;
 }

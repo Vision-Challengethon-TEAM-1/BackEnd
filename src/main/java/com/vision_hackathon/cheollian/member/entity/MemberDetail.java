@@ -73,9 +73,13 @@ public class MemberDetail {
 	@Column(name = "school_code")
 	private Integer schoolCode;
 
+	@Column(name = "region_code")
+	private String regionCode;
+
+
 	@Builder
 	public MemberDetail(UUID memberId, Member member, int age, Gender gender, float height, float weight,
-		String nickname, String schoolName, Integer schoolCode) {
+		String nickname, String schoolName, Integer schoolCode, String regionCode) {
 		this.memberId = memberId;
 		this.member = member;
 		this.age = age;
@@ -85,5 +89,6 @@ public class MemberDetail {
 		this.nickname = nickname;
 		this.schoolName = schoolName;
 		this.schoolCode = schoolCode;
+		this.regionCode = regionCode;
 	}
 }

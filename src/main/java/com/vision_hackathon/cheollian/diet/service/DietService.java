@@ -108,11 +108,10 @@ public class DietService {
 		RestTemplate restTemplate = new RestTemplate();
 
 		MemberDetail memberDetail = member.getMemberDetail();
-		//FIX: 행정구역 코드 하드코딩 해놓음 수정 필요
 		URI uri = UriComponentsBuilder
 				.fromUriString("https://open.neis.go.kr/hub/mealServiceDietInfo")
 				.queryParam("SD_SCHUL_CODE", memberDetail.getSchoolCode())
-				.queryParam("ATPT_OFCDC_SC_CODE", "D10")
+				.queryParam("ATPT_OFCDC_SC_CODE", member.getMemberDetail().getRegionCode())
 				.queryParam("KEY", schoolKey)
 				.queryParam("MLSV_YMD", date)
 				.queryParam("Type", "json")

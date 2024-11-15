@@ -27,7 +27,7 @@ public class DailyAnalysisService {
 
     @Transactional
     public AnalyzeDailyResponseDto analyzeDaily(String date, Member member) {
-        Optional<DailyAnalysis> existedAnalysis = dailyAnalysisRepository.findByDate(date);
+        Optional<DailyAnalysis> existedAnalysis = dailyAnalysisRepository.findByDateAndMember(date, member);
 
         if (existedAnalysis.isPresent()) {
             DailyAnalysis dailyAnalysis = existedAnalysis.get();

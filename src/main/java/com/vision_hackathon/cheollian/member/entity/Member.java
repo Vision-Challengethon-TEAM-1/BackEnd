@@ -81,4 +81,10 @@ public class Member extends BaseAuditEntity {
 		this.role = role;
 		this.memberDetail = memberDetail;
 	}
+
+	public void connectMemberDetail(MemberDetail memberDetail) {
+		this.memberDetail = memberDetail;
+	}
+
+
 }

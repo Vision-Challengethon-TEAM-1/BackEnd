@@ -44,6 +44,7 @@ public class DailyAnalysisService {
                     .praise(dailyAnalysis.getPraise())
                     .memberId(member.getMemberId())
                     .date(date)
+                    .score(dailyAnalysis.getScore())
                     .advice(dailyAnalysis.getAdvice())
                     .build();
         }
@@ -78,14 +79,19 @@ public class DailyAnalysisService {
                 .bodyToMono(ChatgptResponseDto.class)
                 .block();
 
+        String[] split = gptResponse.getChoices().get(0).getMessage().getContent().split("#");
 
+
+        System.out.println("split = " + split[0]);
+        System.out.println("split = " + split[1]);
         DailyAnalysis dailyAnalysis = DailyAnalysis.builder()
                 .breakfastKcal(breakfastKcal)
                 .lunchKcal(lunchKcal)
                 .dinnerKcal(dinnerKcal)
                 .member(member)
                 .date(date)
-                .advice(gptResponse.getChoices().get(0).getMessage().getContent())
+                .score(Integer.parseInt(split[0]))
+                .advice(split[1])
                 .build();
 
         dailyAnalysisRepository.save(dailyAnalysis);

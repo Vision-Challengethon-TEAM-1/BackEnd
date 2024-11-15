@@ -43,6 +43,8 @@ public class Prompt {
 
     public static final String DAILY_ANALYSIS =
             """
-                    In the following text, please look at the calorie intake for breakfast, lunch, and dinner for a day that I provide and give advice in Korean.
+                    In the following text, please look at the calorie intake for breakfast, lunch, and dinner for a day that I provide and give advice in Korean. Please provide an overall score and a total advice out of 100, divided by '#'.All you have to do is combine all your meals and provide one result. Don't separate breakfast, lunch and dinner.
+                    
+                    e.g.) 70#아침, 점심, 저녁에 대한 칼로리 섭취량을 평가하고 조언을 드리겠습니다
                    """;
 }

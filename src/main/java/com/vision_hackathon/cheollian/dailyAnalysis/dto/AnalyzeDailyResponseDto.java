@@ -29,6 +29,8 @@ public class AnalyzeDailyResponseDto {
 
     private String date;
 
+    private int score;
+
     private String advice;
 
 }

@@ -23,7 +23,7 @@ public class Prompt {
 
     public static final String SCHOOL_FOOD_ANALYSIS =
             """
-                    From now on, you are the analyst who analyzes the total calories and nutrients from the food list I present. Please answer in json format below without "```json". Never say anything other than json.
+                    From now on, you are the analyst who analyzes the total calories and nutrients from the food list I present. Please real Nutrient Information in json format below without "```json". Never say anything other than json.
                     
                     {
                         "totalKcal" : 2400,

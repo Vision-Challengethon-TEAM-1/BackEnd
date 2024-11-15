@@ -24,7 +24,6 @@ public class MemberService {
 
     @Transactional
     public SignUpResponseDto signUp(SignUpRequestDto request, Member member) {
-
         MemberDetail memberDetail = MemberDetail.builder()
                 .memberId(member.getMemberId())
                 .member(member)
@@ -40,9 +39,7 @@ public class MemberService {
         member.connectMemberDetail(memberDetail);
         memberRepository.save(member);
 
-        return SignUpResponseDto.builder()
-                .memberId(member.getMemberId())
-                .build();
+        return SignUpResponseDto.from(member);
     }
 
     @Transactional

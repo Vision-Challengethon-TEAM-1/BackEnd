@@ -44,6 +44,17 @@ public class GroupController {
 	}
 
 
+	@GetMapping("/public")
+	@PreAuthorize("hasRole('USER') and isAuthenticated()")
+	public ResponseEntity<ApiSuccessResult<List<GroupReadDto>>> getPublicGroups() {
+		List<GroupReadDto> responseBody = groupService.getPublicGroups();
+
+		return ResponseEntity
+			.status(HttpStatus.OK)
+			.body(ApiResponse.success(HttpStatus.OK, responseBody));
+	}
+
+
 	@PostMapping()
 	@PreAuthorize("hasRole('USER') and isAuthenticated()")
 	public ResponseEntity<ApiSuccessResult<GroupReadDto>> getMyGroups(

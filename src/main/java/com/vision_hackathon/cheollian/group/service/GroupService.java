@@ -43,6 +43,13 @@ public class GroupService {
 		return GroupReadDto.of(groupMemberList, groupMemberRepository);
 	}
 
+	public List<GroupReadDto> getPublicGroups() {
+		List<Group> groupList = groupRepository.findAllByIsPublic(true);
+		return groupList.stream()
+			.map(group -> GroupReadDto.of(group, groupMemberRepository))
+			.toList();
+	}
+
 	@Transactional
 	public void addMemberInGroup(UUID groupId, Member member) {
 		Group group = groupRepository.findById(groupId)

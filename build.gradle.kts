@@ -53,6 +53,10 @@ dependencies {
 	// Testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	// GCP Cloud
+	implementation ("org.springframework.cloud:spring-cloud-gcp-starter:1.2.5.RELEASE")
+	implementation ("org.springframework.cloud:spring-cloud-gcp-storage:1.2.5.RELEASE")
 }
 
 dependencyManagement {

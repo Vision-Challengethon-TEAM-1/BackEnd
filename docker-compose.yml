@@ -12,6 +12,9 @@ services:
       - ${SPRING_PORT}:${SPRING_PORT}
     depends_on:
       - cheollian-database
+    networks:
+      - cheollian-network
+
 
   cheollian-database:
     image: mysql:8.0
@@ -35,6 +38,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - cheollian-network
 
   cheollian-redis:
     image: redis:5.0
@@ -48,6 +53,13 @@ services:
       - cheollian-redis:/data
     restart: always
 
+    networks:
+      - cheollian-network
+
 volumes:
   cheollian-database:
   cheollian-redis:
+
+networks:
+  cheollian-network:
+    external: true

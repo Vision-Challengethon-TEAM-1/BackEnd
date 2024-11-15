@@ -46,6 +46,12 @@ app:
   auth:
     redirect-uri: ${OAUTH2_REDIRECT_URI}
 
+cloud:
+  project-id: ${CLOUD_PROJECT_ID}
+  bucket: ${CLOUD_BUCKET_NAME}
+
+school:
+  key: ${SCHOOL_KEY}
 
 logging:
   level:

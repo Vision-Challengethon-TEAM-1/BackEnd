@@ -57,6 +57,9 @@ dependencies {
 	// GCP Cloud
 	implementation ("org.springframework.cloud:spring-cloud-gcp-starter:1.2.5.RELEASE")
 	implementation ("org.springframework.cloud:spring-cloud-gcp-storage:1.2.5.RELEASE")
+
+	// Tika
+	implementation("org.apache.tika:tika-core:2.9.2")
 }
 
 dependencyManagement {

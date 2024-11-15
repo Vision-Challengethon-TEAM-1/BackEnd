@@ -6,7 +6,6 @@ import java.util.UUID;
 import com.vision_hackathon.cheollian.group.entity.Group;
 import com.vision_hackathon.cheollian.group.entity.GroupMember;
 import com.vision_hackathon.cheollian.group.persistence.GroupMemberRepository;
-import com.vision_hackathon.cheollian.member.entity.Member;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

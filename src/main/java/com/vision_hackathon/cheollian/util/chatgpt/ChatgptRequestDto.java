@@ -1,9 +1,10 @@
 package com.vision_hackathon.cheollian.util.chatgpt;
-import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Getter;
 
 @Getter
 public class ChatgptRequestDto implements Serializable {

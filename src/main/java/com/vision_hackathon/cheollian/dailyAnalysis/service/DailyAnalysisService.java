@@ -1,26 +1,26 @@
 package com.vision_hackathon.cheollian.dailyAnalysis.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.BodyInserters;
+
 import com.vision_hackathon.cheollian.config.ChatGptConfig;
 import com.vision_hackathon.cheollian.dailyAnalysis.dto.AnalyzeDailyResponseDto;
 import com.vision_hackathon.cheollian.dailyAnalysis.entity.DailyAnalysis;
+import com.vision_hackathon.cheollian.dailyAnalysis.persistence.DailyAnalysisRepository;
 import com.vision_hackathon.cheollian.diet.entity.Diet;
 import com.vision_hackathon.cheollian.diet.entity.DietType;
 import com.vision_hackathon.cheollian.diet.persistence.DietRepository;
 import com.vision_hackathon.cheollian.member.entity.Member;
 import com.vision_hackathon.cheollian.util.chatgpt.ChatgptRequestDto;
 import com.vision_hackathon.cheollian.util.chatgpt.ChatgptResponseDto;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.vision_hackathon.cheollian.dailyAnalysis.persistence.DailyAnalysisRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.reactive.function.BodyInserters;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

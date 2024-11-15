@@ -1,6 +1,7 @@
 package com.vision_hackathon.cheollian.member.dto;
 
 import com.vision_hackathon.cheollian.member.entity.Gender;
+
 import lombok.Getter;
 
 @Getter

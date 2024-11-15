@@ -1,9 +1,9 @@
 package com.vision_hackathon.cheollian.member.dto;
 
+import java.util.UUID;
+
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.UUID;
 
 @Getter
 public class ConnectSchoolResponseDto {

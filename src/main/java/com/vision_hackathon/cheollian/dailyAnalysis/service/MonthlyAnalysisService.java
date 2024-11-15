@@ -1,13 +1,14 @@
 package com.vision_hackathon.cheollian.dailyAnalysis.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.vision_hackathon.cheollian.dailyAnalysis.dto.AnalyzeMonthlyResponseDto;
 import com.vision_hackathon.cheollian.dailyAnalysis.entity.DailyAnalysis;
 import com.vision_hackathon.cheollian.dailyAnalysis.entity.Praise;
 import com.vision_hackathon.cheollian.dailyAnalysis.persistence.DailyAnalysisRepository;
-import com.vision_hackathon.cheollian.dailyAnalysis.dto.AnalyzeMonthlyResponseDto;
 import com.vision_hackathon.cheollian.member.entity.Member;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class MonthlyAnalysisService {

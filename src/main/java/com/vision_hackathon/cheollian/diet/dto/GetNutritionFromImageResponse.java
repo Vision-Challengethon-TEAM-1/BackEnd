@@ -1,6 +1,7 @@
 package com.vision_hackathon.cheollian.diet.dto;
 
 import com.vision_hackathon.cheollian.diet.entity.DietType;
+
 import lombok.Getter;
 import lombok.Setter;
 

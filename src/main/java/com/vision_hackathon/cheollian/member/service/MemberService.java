@@ -1,5 +1,8 @@
 package com.vision_hackathon.cheollian.member.service;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.vision_hackathon.cheollian.member.dto.ConnectSchoolRequestDto;
 import com.vision_hackathon.cheollian.member.dto.ConnectSchoolResponseDto;
 import com.vision_hackathon.cheollian.member.dto.SignUpRequestDto;
@@ -8,9 +11,6 @@ import com.vision_hackathon.cheollian.member.entity.Member;
 import com.vision_hackathon.cheollian.member.entity.MemberDetail;
 import com.vision_hackathon.cheollian.member.exception.MemberNotJoinedException;
 import com.vision_hackathon.cheollian.member.persistence.MemberDetailRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.vision_hackathon.cheollian.member.persistence.MemberRepository;
 
 import lombok.RequiredArgsConstructor;

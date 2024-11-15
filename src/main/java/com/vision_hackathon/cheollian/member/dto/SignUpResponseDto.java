@@ -1,13 +1,11 @@
 package com.vision_hackathon.cheollian.member.dto;
 
-
-import lombok.Builder;
-import lombok.Getter;
-
 import java.util.UUID;
 
 import com.vision_hackathon.cheollian.member.entity.Member;
 import com.vision_hackathon.cheollian.member.entity.MemberDetail;
+
+import lombok.Builder;
 
 @Builder
 public record SignUpResponseDto(

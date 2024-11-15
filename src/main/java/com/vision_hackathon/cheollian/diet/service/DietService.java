@@ -1,5 +1,17 @@
 package com.vision_hackathon.cheollian.diet.service;
 
+import java.io.IOException;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vision_hackathon.cheollian.config.ChatGptConfig;
@@ -8,38 +20,19 @@ import com.vision_hackathon.cheollian.diet.dto.GetNutritionFromImageResponse;
 import com.vision_hackathon.cheollian.diet.dto.GetNutritionFromSchoolResponseDto;
 import com.vision_hackathon.cheollian.diet.entity.Diet;
 import com.vision_hackathon.cheollian.diet.entity.DietType;
+import com.vision_hackathon.cheollian.diet.persistence.DietRepository;
 import com.vision_hackathon.cheollian.member.entity.Member;
 import com.vision_hackathon.cheollian.member.entity.MemberDetail;
 import com.vision_hackathon.cheollian.util.chatgpt.ChatgptRequestDto;
 import com.vision_hackathon.cheollian.util.chatgpt.ChatgptResponseDto;
-import com.vision_hackathon.cheollian.util.gcp.CloudStorageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.vision_hackathon.cheollian.diet.persistence.DietRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.io.IOException;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class DietService {
-	@Autowired
 	private final DietRepository dietRepository;
-	@Autowired
-	private final CloudStorageService cloudStorageService;
-	@Autowired
 	private final ChatGptConfig chatGptConfig;
 
 	@Value("${school.key}")
@@ -48,13 +41,13 @@ public class DietService {
 	@Transactional
 	public GetNutritionFromImageResponse getNutritionFromImage(
 			GetNutritionFromImageRequest request,
-			MultipartFile image,
 			Member member
 		) throws IOException {
-		String uploadedImage = cloudStorageService.uploadObject(image);
+		// String uploadedImage = cloudStorageService.uploadObject(image);
+
 		ChatgptResponseDto gptResponse = chatGptConfig.webClient()
 				.post()
-				.body(BodyInserters.fromValue(new ChatgptRequestDto(uploadedImage)))
+				.body(BodyInserters.fromValue(new ChatgptRequestDto(request.getImageUrl())))
 				.retrieve()
 				.bodyToMono(ChatgptResponseDto.class)
 				.block();
@@ -84,7 +77,7 @@ public class DietService {
 			response.setType(request.getType());
 
 			Diet diet = Diet.builder()
-					.image(uploadedImage)
+					.image(request.getImageUrl())
 					.date(request.getDate())
 					.totalKcal(response.getTotalKcal())
 					.carbs(response.getCarbs())
@@ -107,10 +100,6 @@ public class DietService {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-
-
-
-
 	}
 
 	public GetNutritionFromSchoolResponseDto getNutritionFromSchool(String date, Member member) {

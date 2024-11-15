@@ -1,12 +1,13 @@
 package com.vision_hackathon.cheollian.dailyAnalysis.dto;
 
+import java.util.UUID;
+
 import com.vision_hackathon.cheollian.dailyAnalysis.entity.Praise;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.UUID;
 
 @Getter
 @Setter

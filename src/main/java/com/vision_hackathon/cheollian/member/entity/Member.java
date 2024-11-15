@@ -7,8 +7,8 @@ import java.util.UUID;
 import com.vision_hackathon.cheollian.base.BaseAuditEntity;
 import com.vision_hackathon.cheollian.dailyAnalysis.entity.DailyAnalysis;
 import com.vision_hackathon.cheollian.diet.entity.Diet;
-
 import com.vision_hackathon.cheollian.diet.exception.SchoolNotFoundException;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

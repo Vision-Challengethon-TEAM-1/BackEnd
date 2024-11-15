@@ -1,10 +1,10 @@
 package com.vision_hackathon.cheollian.util.chatgpt;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter

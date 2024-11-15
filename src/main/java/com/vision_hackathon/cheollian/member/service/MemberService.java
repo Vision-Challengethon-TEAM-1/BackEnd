@@ -1,9 +1,12 @@
 package com.vision_hackathon.cheollian.member.service;
 
+import com.vision_hackathon.cheollian.member.dto.ConnectSchoolRequestDto;
+import com.vision_hackathon.cheollian.member.dto.ConnectSchoolResponseDto;
 import com.vision_hackathon.cheollian.member.dto.SignUpRequestDto;
 import com.vision_hackathon.cheollian.member.dto.SignUpResponseDto;
 import com.vision_hackathon.cheollian.member.entity.Member;
 import com.vision_hackathon.cheollian.member.entity.MemberDetail;
+import com.vision_hackathon.cheollian.member.exception.MemberNotJoinedException;
 import com.vision_hackathon.cheollian.member.persistence.MemberDetailRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +41,23 @@ public class MemberService {
         member.connectMemberDetail(memberDetail);
         memberRepository.save(member);
 
-        return new SignUpResponseDto(member.getMemberId());
+        return SignUpResponseDto.builder()
+                .memberId(member.getMemberId())
+                .build();
+    }
+
+    @Transactional
+    public ConnectSchoolResponseDto connectSchool(ConnectSchoolRequestDto request, Member member) {
+        checkMemberJoined(member);
+        member.connectSchool(request.getSchoolName(), request.getSchoolCode());
+        memberRepository.save(member);
+
+        return new ConnectSchoolResponseDto(member.getMemberId());
+    }
+
+    private void checkMemberJoined(Member member) {
+        if (member.getMemberDetail() == null){
+            throw new MemberNotJoinedException();
+        }
     }
 }

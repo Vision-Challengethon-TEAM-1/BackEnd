@@ -10,14 +10,15 @@ import lombok.Builder;
 @Builder
 public record MemberResponseDto(
 	UUID memberId, String email,
-	String name, Role role,
-	MemberDetailResponseDto memberDetail
+	String name, String profileImage,
+	Role role, MemberDetailResponseDto memberDetail
 ) {
 	public static MemberResponseDto from(Member member) {
 		return MemberResponseDto.builder()
 			.memberId(member.getMemberId())
 			.email(member.getEmail())
 			.name(member.getName())
+			.profileImage(member.getProfileImage())
 			.role(member.getRole())
 			.memberDetail(MemberDetailResponseDto.from(member.getMemberDetail()))
 			.build();

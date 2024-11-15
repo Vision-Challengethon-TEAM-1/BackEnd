@@ -1,17 +1,21 @@
 package com.vision_hackathon.cheollian.dailyAnalysis.service;
 
+import com.vision_hackathon.cheollian.config.ChatGptConfig;
 import com.vision_hackathon.cheollian.dailyAnalysis.dto.AnalyzeDailyResponseDto;
 import com.vision_hackathon.cheollian.dailyAnalysis.entity.DailyAnalysis;
 import com.vision_hackathon.cheollian.diet.entity.Diet;
 import com.vision_hackathon.cheollian.diet.entity.DietType;
 import com.vision_hackathon.cheollian.diet.persistence.DietRepository;
 import com.vision_hackathon.cheollian.member.entity.Member;
+import com.vision_hackathon.cheollian.util.chatgpt.ChatgptRequestDto;
+import com.vision_hackathon.cheollian.util.chatgpt.ChatgptResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vision_hackathon.cheollian.dailyAnalysis.persistence.DailyAnalysisRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.reactive.function.BodyInserters;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +28,7 @@ import java.util.stream.Collectors;
 public class DailyAnalysisService {
 	private final DailyAnalysisRepository dailyAnalysisRepository;
     private final DietRepository dietRepository;
+    private final ChatGptConfig chatGptConfig;
 
     @Transactional
     public AnalyzeDailyResponseDto analyzeDaily(String date, Member member) {
@@ -39,6 +44,7 @@ public class DailyAnalysisService {
                     .praise(dailyAnalysis.getPraise())
                     .memberId(member.getMemberId())
                     .date(date)
+                    .advice(dailyAnalysis.getAdvice())
                     .build();
         }
 
@@ -65,12 +71,21 @@ public class DailyAnalysisService {
             dinnerKcal = dietMap.get(DietType.DINNER).getTotalKcal();
         }
 
+        ChatgptResponseDto gptResponse = chatGptConfig.webClient()
+                .post()
+                .body(BodyInserters.fromValue(new ChatgptRequestDto(breakfastKcal, lunchKcal,dinnerKcal)))
+                .retrieve()
+                .bodyToMono(ChatgptResponseDto.class)
+                .block();
+
+
         DailyAnalysis dailyAnalysis = DailyAnalysis.builder()
                 .breakfastKcal(breakfastKcal)
                 .lunchKcal(lunchKcal)
                 .dinnerKcal(dinnerKcal)
                 .member(member)
                 .date(date)
+                .advice(gptResponse.getChoices().get(0).getMessage().getContent())
                 .build();
 
         dailyAnalysisRepository.save(dailyAnalysis);
@@ -83,6 +98,7 @@ public class DailyAnalysisService {
                 .memberId(member.getMemberId())
                 .praise(dailyAnalysis.getPraise())
                 .date(date)
+                .advice(dailyAnalysis.getAdvice())
                 .build();
     }
 }

@@ -65,14 +65,6 @@ public class MemberDetail {
 	@Size(max = 50, message = "Nickname must not exceed 50 characters")
 	private String nickname;
 
-	@Column(name = "profile_image", length = 256)
-	@Size(max = 256, message = "Profile image URL must not exceed 256 characters")
-	@Pattern(
-		regexp = "^(https?://).+",
-		message = "Profile image must be a valid URL starting with http:// or https://"
-	)
-	private String profileImage;
-
 	@Column(name = "school_name", length = 20)
 	@Size(max = 20, message = "School name must not exceed 20 characters")
 	private String schoolName;
@@ -82,7 +74,7 @@ public class MemberDetail {
 
 	@Builder
 	public MemberDetail(UUID memberId, Member member, int age, Gender gender, float height, float weight,
-		String nickname, String profileImage, String schoolName, Integer schoolCode) {
+		String nickname, String schoolName, Integer schoolCode) {
 		this.memberId = memberId;
 		this.member = member;
 		this.age = age;
@@ -90,7 +82,6 @@ public class MemberDetail {
 		this.height = height;
 		this.weight = weight;
 		this.nickname = nickname;
-		this.profileImage = profileImage;
 		this.schoolName = schoolName;
 		this.schoolCode = schoolCode;
 	}

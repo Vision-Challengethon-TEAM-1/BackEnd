@@ -23,6 +23,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -54,6 +55,14 @@ public class Member extends BaseAuditEntity {
 	@Column(name = "role")
 	private Role role;
 
+	@Column(name = "profile_image", length = 256)
+	@Size(max = 256, message = "Profile image URL must not exceed 256 characters")
+	@Pattern(
+		regexp = "^(https?://).+",
+		message = "Profile image must be a valid URL starting with http:// or https://"
+	)
+	private String profileImage;
+
 	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private MemberDetail memberDetail;
 
@@ -74,10 +83,11 @@ public class Member extends BaseAuditEntity {
 	private List<DailyAnalysis> dailyAnalyses = new ArrayList<>();
 
 	@Builder
-	public Member(UUID memberId, String email, String name, Role role, MemberDetail memberDetail) {
+	public Member(UUID memberId, String email, String name, String profileImage, Role role, MemberDetail memberDetail) {
 		this.memberId = memberId;
 		this.email = email;
 		this.name = name;
+		this.profileImage = profileImage;
 		this.role = role;
 		this.memberDetail = memberDetail;
 	}

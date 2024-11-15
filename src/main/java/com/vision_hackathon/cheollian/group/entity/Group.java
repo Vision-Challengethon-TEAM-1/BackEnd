@@ -13,9 +13,12 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "`group`") // Group은 MySQL 예약어이므로 테이블명을 `group`로 설정
 public class Group extends BaseAuditEntity {
@@ -31,6 +34,7 @@ public class Group extends BaseAuditEntity {
 	@Column(name = "is_public", nullable = false)
 	private Boolean isPublic;
 
+	@Builder
 	public Group(UUID groupId, String groupName, Boolean isPublic) {
 		this.groupId = groupId;
 		this.groupName = groupName;

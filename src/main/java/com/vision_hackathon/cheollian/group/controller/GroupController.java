@@ -1,5 +1,7 @@
 package com.vision_hackathon.cheollian.group.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,7 +53,11 @@ public class GroupController {
 		@PathVariable("groupId") UUID groupId,
 		@PathVariable("date") String date
 	) {
-		List<GroupMemberCalReadDto> responseBody = groupService.getMembersOfGroup(groupId, date);
+		LocalDate currentDate = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		String formattedDate = currentDate.format(formatter);
+
+		List<GroupMemberCalReadDto> responseBody = groupService.getMembersOfGroup(groupId, formattedDate);
 
 		return ResponseEntity
 			.status(HttpStatus.OK)

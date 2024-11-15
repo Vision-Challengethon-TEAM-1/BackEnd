@@ -1,11 +1,11 @@
 package com.vision_hackathon.cheollian.member.controller;
 
+import com.vision_hackathon.cheollian.member.dto.SignUpRequestDto;
+import com.vision_hackathon.cheollian.member.dto.SignUpResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.vision_hackathon.cheollian.auth.security.LoggedInUser;
 import com.vision_hackathon.cheollian.auth.security.details.PrincipalDetails;
@@ -34,5 +34,15 @@ public class MemberController {
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(ApiResponse.success(HttpStatus.OK, responseBody));
+	}
+
+	@PostMapping("sign-up")
+	@PreAuthorize("hasRole('USER') and isAuthenticated()")
+	public ResponseEntity<ApiSuccessResult<SignUpResponseDto>> signUp(
+			@RequestBody SignUpRequestDto request,
+			@LoggedInUser PrincipalDetails principalDetails
+	){
+		return ResponseEntity
+				.ok(ApiResponse.success(HttpStatus.OK, memberService.signUp(request, principalDetails.member())));
 	}
 }

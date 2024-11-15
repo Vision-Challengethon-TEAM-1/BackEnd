@@ -82,8 +82,6 @@ public class DailyAnalysisService {
         String[] split = gptResponse.getChoices().get(0).getMessage().getContent().split("#");
 
 
-        System.out.println("split = " + split[0]);
-        System.out.println("split = " + split[1]);
         DailyAnalysis dailyAnalysis = DailyAnalysis.builder()
                 .breakfastKcal(breakfastKcal)
                 .lunchKcal(lunchKcal)

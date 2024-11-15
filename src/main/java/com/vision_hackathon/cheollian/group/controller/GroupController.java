@@ -3,6 +3,7 @@ package com.vision_hackathon.cheollian.group.controller;
 import java.util.List;
 import java.util.UUID;
 
+import com.vision_hackathon.cheollian.group.dto.GetGroupDietResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -85,6 +86,15 @@ public class GroupController {
 		return ResponseEntity
 			.status(HttpStatus.CREATED)
 			.body(ApiResponse.success(HttpStatus.OK));
+	}
+
+	@GetMapping("/{groupId}/{date}")
+	public ResponseEntity<ApiSuccessResult<List<GetGroupDietResponseDto>>> getGroupDiet(
+			@PathVariable("groupId") UUID groupId,
+			@PathVariable("date") String date
+	){
+		return ResponseEntity.ok()
+				.body(ApiResponse.success(HttpStatus.OK, groupService.getGroupDiet(groupId, date)));
 	}
 
 
